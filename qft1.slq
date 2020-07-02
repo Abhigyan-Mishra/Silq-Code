@@ -1,0 +1,23 @@
+def QFT[n:!N] (qs:B^n) mfree:B^n {
+    for i in [0..n) {
+        qs[i] := H(qs[i]);
+
+        for j in [i+1..n) {
+            qs[j] := U1(π/2^(j - i), qs[j]);
+        }
+    }
+
+    return swap_all(qs);
+}
+def swap_all[n:!N] (qs:B^n) mfree:B^n {
+    for i in [0..n div 2) {
+      (qs[i], qs[n-i-1]) := (qs[n-i-1], qs[i]);
+    }
+
+    return qs;
+}
+// Single-qubit rotation about the Z axis.
+def U1 (r:!ℝ, q:B) mfree {
+    if q { phase(r) }
+    return q;
+}
